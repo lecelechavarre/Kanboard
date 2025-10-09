@@ -3,16 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kanban WOW — Labels, Due Dates & Markdown Preview</title>
+  <title>Kanban Board</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body data-theme="light">
   <header class="app-header">
     <div class="brand">
       <div class="logo">✨</div>
       <h1>Kanban Board</h1>
     </div>
+
+    <div class="header-center">
+      <div class="filter-bar" id="filterBar" aria-label="Filter tasks by label">
+        <span class="filter-label">Filter:</span>
+        <div id="labelFilters" class="label-filters"></div>
+        <button id="clearFilters" class="btn subtle small">Clear</button>
+      </div>
+    </div>
+
     <div class="header-actions">
+      <button id="themeToggle" class="btn subtle" title="Toggle light/dark">🌙</button>
       <button id="exportBtn" class="btn subtle">Export</button>
       <button id="importBtn" class="btn subtle">Import</button>
       <button id="addTaskGlobal" class="btn primary">＋ Add Task</button>
@@ -26,7 +36,7 @@
     <div class="modal-backdrop" data-close="true"></div>
     <div class="modal-sheet" role="document" aria-modal="true">
       <header class="modal-head">
-        <h3 id="modalTitle">Edit task</h3>
+        <h3 id="modalTitle">Edit Task</h3>
         <button class="btn subtle" data-close="true">Close</button>
       </header>
       <div class="modal-body">
@@ -35,12 +45,12 @@
         </label>
 
         <label>Description (Markdown)
-          <textarea id="taskDesc" rows="6" placeholder="Use Markdown — **bold**, *italic*, - list"></textarea>
+          <textarea id="taskDesc" rows="6" placeholder="Use Markdown — **bold**, *italic*, - lists"></textarea>
         </label>
 
         <div class="row two">
           <label>Labels (comma separated)
-            <input id="taskLabels" type="text" placeholder="e.g. backend, high-priority" />
+            <input id="taskLabels" type="text" placeholder="e.g. frontend,high-priority" />
           </label>
 
           <label>Due date
