@@ -3,84 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kanban Board</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Kanban Pro — Offline</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body data-theme="light">
   <header class="app-header">
     <div class="brand">
       <div class="logo">✨</div>
-      <h1>Kanban Board</h1>
+      <h1>Kanban Pro</h1>
     </div>
 
-    <div class="header-center">
-      <div class="filter-bar" id="filterBar" aria-label="Filter tasks by label">
-        <span class="filter-label">Filter:</span>
-        <div id="labelFilters" class="label-filters"></div>
-        <button id="clearFilters" class="btn subtle small">Clear</button>
+    <div class="toolbar">
+      <div class="left">
+        <button id="addColumnBtn" class="btn subtle">+ Column</button>
+        <select id="sortSelect" title="Sort tasks">
+          <option value="manual">Sort: Manual</option>
+          <option value="due">Sort: Due date</option>
+          <option value="created">Sort: Created</option>
+        </select>
+        <input id="searchInput" placeholder="Search tasks..." />
       </div>
-    </div>
 
-    <div class="header-actions">
-      <button id="themeToggle" class="btn subtle" title="Toggle light/dark">🌙</button>
-      <button id="exportBtn" class="btn subtle">Export</button>
-      <button id="importBtn" class="btn subtle">Import</button>
-      <button id="addTaskGlobal" class="btn primary">＋ Add Task</button>
+      <div class="right">
+        <div id="labelFilters" class="label-filters"></div>
+        <button id="themeToggle" class="btn subtle">🌙</button>
+        <button id="notifyToggle" class="btn subtle">🔔</button>
+        <button id="exportBtn" class="btn subtle">Export</button>
+        <button id="importBtn" class="btn subtle">Import</button>
+        <button id="addTaskGlobal" class="btn primary">＋ Add Task</button>
+        <button id="openActivity" class="btn subtle">Activity</button>
+      </div>
     </div>
   </header>
 
-  <main id="board" class="board" tabindex="0" aria-label="Kanban board"></main>
+  <main id="boardRoot" class="board-root" tabindex="0" aria-label="Kanban board"></main>
 
-  <!-- Edit Modal -->
-  <div id="modal" class="modal" role="dialog" aria-hidden="true">
-    <div class="modal-backdrop" data-close="true"></div>
-    <div class="modal-sheet" role="document" aria-modal="true">
-      <header class="modal-head">
-        <h3 id="modalTitle">Edit Task</h3>
-        <button class="btn subtle" data-close="true">Close</button>
-      </header>
-      <div class="modal-body">
-        <label>Title
-          <input id="taskTitle" type="text" />
-        </label>
+  <!-- Modal container -->
+  <div id="modalRoot"></div>
 
-        <label>Description (Markdown)
-          <textarea id="taskDesc" rows="6" placeholder="Use Markdown — **bold**, *italic*, - lists"></textarea>
-        </label>
+  <!-- Activity drawer -->
+  <aside id="activityDrawer" class="activity-drawer" aria-hidden="true">
+    <header><h3>Activity Log</h3><button id="closeActivity" class="btn subtle">Close</button></header>
+    <div id="activityList" class="activity-list"></div>
+    <footer><button id="clearActivity" class="btn danger">Clear log</button></footer>
+  </aside>
 
-        <div class="row two">
-          <label>Labels (comma separated)
-            <input id="taskLabels" type="text" placeholder="e.g. frontend,high-priority" />
-          </label>
-
-          <label>Due date
-            <input id="taskDue" type="date" />
-          </label>
-        </div>
-
-        <div class="row">
-          <label style="align-items:center"><input id="taskDone" type="checkbox" /> Mark as done</label>
-        </div>
-
-        <div class="row preview-row">
-          <button id="togglePreview" class="btn subtle">Toggle Preview</button>
-          <div id="mdPreview" class="md-preview" aria-live="polite" hidden></div>
-        </div>
-
-      </div>
-      <footer class="modal-foot">
-        <button id="deleteTask" class="btn danger">Delete</button>
-        <div style="flex:1"></div>
-        <button id="saveTask" class="btn primary">Save</button>
-      </footer>
-    </div>
-  </div>
-
-  <!-- Snackbar / Undo -->
   <div id="snackbar" class="snackbar" aria-live="polite"></div>
-
   <input id="fileInput" type="file" accept="application/json" style="display:none" />
 
-  <script src="script.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
