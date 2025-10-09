@@ -1,20 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kanban WOW Board</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kanban WOW — Labels, Due Dates & Markdown Preview</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>✨ Kanban WOW Board</h1>
-    <button id="addTaskBtn">＋ Add Task</button>
+  <header class="app-header">
+    <div class="brand">
+      <div class="logo">✨</div>
+      <h1>Kanban Board</h1>
+    </div>
+    <div class="header-actions">
+      <button id="exportBtn" class="btn subtle">Export</button>
+      <button id="importBtn" class="btn subtle">Import</button>
+      <button id="addTaskGlobal" class="btn primary">＋ Add Task</button>
+    </div>
   </header>
 
-  <main id="board" class="board"></main>
+  <main id="board" class="board" tabindex="0" aria-label="Kanban board"></main>
 
-  <div id="snackbar" class="snackbar"></div>
+  <!-- Edit Modal -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-sheet" role="document" aria-modal="true">
+      <header class="modal-head">
+        <h3 id="modalTitle">Edit task</h3>
+        <button class="btn subtle" data-close="true">Close</button>
+      </header>
+      <div class="modal-body">
+        <label>Title
+          <input id="taskTitle" type="text" />
+        </label>
+
+        <label>Description (Markdown)
+          <textarea id="taskDesc" rows="6" placeholder="Use Markdown — **bold**, *italic*, - list"></textarea>
+        </label>
+
+        <div class="row two">
+          <label>Labels (comma separated)
+            <input id="taskLabels" type="text" placeholder="e.g. backend, high-priority" />
+          </label>
+
+          <label>Due date
+            <input id="taskDue" type="date" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label style="align-items:center"><input id="taskDone" type="checkbox" /> Mark as done</label>
+        </div>
+
+        <div class="row preview-row">
+          <button id="togglePreview" class="btn subtle">Toggle Preview</button>
+          <div id="mdPreview" class="md-preview" aria-live="polite" hidden></div>
+        </div>
+
+      </div>
+      <footer class="modal-foot">
+        <button id="deleteTask" class="btn danger">Delete</button>
+        <div style="flex:1"></div>
+        <button id="saveTask" class="btn primary">Save</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Snackbar / Undo -->
+  <div id="snackbar" class="snackbar" aria-live="polite"></div>
+
+  <input id="fileInput" type="file" accept="application/json" style="display:none" />
 
   <script src="script.js"></script>
 </body>
